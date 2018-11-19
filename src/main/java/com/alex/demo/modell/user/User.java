@@ -1,24 +1,63 @@
 package com.alex.demo.modell.user;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
-@ToString
-@Getter
-@Table(name = "USERS")
 @Entity
-public class User {
+@Getter
+@ToString
+@Table(name = "USERS")
+@EqualsAndHashCode(exclude = "id")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+public final class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "ID", nullable = false)
-    Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", nullable = false, unique = true)
+    private Long id;
 
+    @NonNull
     @Column(name = "USER_NAME", nullable = false)
-    String userName;
+    private String userName;
 
+    @NonNull
     @Column(name = "PASSWORD", nullable = false)
-    String password;
+    private String password;
+
+    @NonNull
+    @Column(name = "EMAIL_ADDRESS", nullable = false, unique = true)
+    private String emailAddess;
+
+
+    public User(Builder builder) {
+        this.userName = builder.userName;
+        this.password = builder.password;
+        this.emailAddess = builder.emailAddess;
+    }
+
+    public static final class Builder {
+
+        private String userName;
+        private String password;
+        private String emailAddess;
+
+        public Builder userName(String userName) {
+            this.userName = userName;
+            return this;
+        }
+
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder emailAddess(String emailAddess) {
+            this.emailAddess = emailAddess;
+            return this;
+        }
+
+    }
+
 }
