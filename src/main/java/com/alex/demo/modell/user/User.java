@@ -31,10 +31,18 @@ public final class User {
     private String emailAddess;
 
 
-    public User(Builder builder) {
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    private User(Builder builder) {
         this.userName = builder.userName;
         this.password = builder.password;
         this.emailAddess = builder.emailAddess;
+    }
+
+    public static User create(Builder builder){
+        return new User(builder);
     }
 
     public static final class Builder {
