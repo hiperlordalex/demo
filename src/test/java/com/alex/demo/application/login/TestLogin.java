@@ -14,6 +14,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -40,7 +41,10 @@ public class TestLogin {
         params.add("emailAddess", "test");
         params.add("password", "test");
 
-        mockMvc.perform(post("/login").params(params)).andExpect(status().isOk());
+        mockMvc.perform(post("/login")
+                .params(params))
+                .andExpect(redirectedUrl("/home"))
+                .andExpect(status().isFound());
     }
 
 }
